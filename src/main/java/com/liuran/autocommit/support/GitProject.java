@@ -4,7 +4,6 @@ import com.liuran.autocommit.vos.Message;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.RmCommand;
 import org.eclipse.jgit.api.Status;
-import org.eclipse.jgit.api.StatusCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.merge.MergeStrategy;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -41,6 +40,13 @@ public class GitProject implements Push, Pull {
         }
         commit(message.getMessage());
         _pull();
+        // TODO merge后需要重新提交
+//        add();
+//        if (!needCommit()) {
+//            return;
+//        }
+//        commit(message.getMessage());
+
         _push();
         LOG.info("push take up time : " + (System.currentTimeMillis() - startTime));
     }

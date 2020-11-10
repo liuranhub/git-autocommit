@@ -12,9 +12,4 @@ public class CommitController {
     public void commit(@RequestBody Message message){
         ProjectCollection.get().push(message);
     }
-
-    @GetMapping("status")
-    public void status(){
-        ((GitProject)ProjectCollection.get()).status();
-    }
 }

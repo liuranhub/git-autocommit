@@ -15,7 +15,7 @@ public class AutoPushTimer {
     @PostConstruct
     public void init(){
         PUSH_TIME.add(18);
-        PUSH_TIME.add(20);
+        PUSH_TIME.add(23);
 
         timer.schedule(new TimerTask() {
             @Override
