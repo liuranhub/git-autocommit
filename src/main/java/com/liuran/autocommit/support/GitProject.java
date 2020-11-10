@@ -49,11 +49,6 @@ public class GitProject implements Push, Pull {
 
     }
 
-    public void status(){
-        StatusCommand statusCommand = git.status();
-        System.out.println();
-    }
-
     private boolean needCommit(){
         try {
             Status status = git.status().call();
