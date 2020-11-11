@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class Constant {
     public static List<ProjectConfig> DEFAULT_PROJECT_LIST;
-    public static ProxyConfig PROXY;
+    public static Proxy PROXY;
 
     static {
         try {
@@ -22,11 +22,10 @@ public class Constant {
             String projectPath = properties.getProperty("git.project");
             DEFAULT_PROJECT_LIST = toProject(projectPath, username, password);
 
-            PROXY = new ProxyConfig();
-            PROXY.setHost(properties.getProperty("proxy.host"));
-            PROXY.setPort(properties.getProperty("proxy.port"));
-            PROXY.setUsername(properties.getProperty("proxy.username"));
-            PROXY.setPassword(properties.getProperty("proxy.password"));
+            PROXY = new Proxy(properties.getProperty("proxy.host"),
+                    properties.getProperty("proxy.port"),
+                    properties.getProperty("proxy.username"),
+                    properties.getProperty("proxy.password"));
         } catch (IOException e) {
             e.printStackTrace();
         }
