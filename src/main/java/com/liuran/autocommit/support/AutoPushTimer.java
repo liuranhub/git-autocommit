@@ -26,7 +26,9 @@ public class AutoPushTimer {
                     Message msg = new Message();
                     msg.setMessage("auto commit time:" + calendar.getTime().toString());
                     try {
-                        ProjectCollection.get().push(msg);
+                        for (Project project : ProjectCollection.getAll().values()) {
+                            project.push(msg);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

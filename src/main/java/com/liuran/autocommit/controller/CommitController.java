@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/autocommit")
 public class CommitController {
-    @PostMapping()
-    public void commit(@RequestBody Message message){
-        ProjectCollection.get().push(message);
+    @PostMapping(value = "{projectName}")
+    public void commit(@PathVariable String projectName, @RequestBody Message message){
+        ProjectCollection.get(projectName).push(message);
     }
 }

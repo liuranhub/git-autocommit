@@ -9,15 +9,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        System.setProperty("proxyHost", Constant.PROXY_HOST);
-        System.setProperty("proxyPort",  Constant.PROXY_PORT);
-        System.setProperty("proxyUser", Constant.GIT_USERNAME);
-        System.setProperty("proxyPassword", Constant.PROXY_PASSWORD);
-
+        System.setProperty("proxyHost", Constant.PROXY.getHost());
+        System.setProperty("proxyPort",  Constant.PROXY.getPort());
+        System.setProperty("proxyUser", Constant.PROXY.getUsername());
+        System.setProperty("proxyPassword", Constant.PROXY.getPassword());
 
         ProjectCollection.init();
-
         return builder.sources(Application.class);
-
     }
 }

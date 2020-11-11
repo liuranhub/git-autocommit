@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-public class GitProject implements Push, Pull {
+public class GitProject implements Project {
 
     private static final Logger LOG = LoggerFactory.getLogger(GitProject.class);
 
