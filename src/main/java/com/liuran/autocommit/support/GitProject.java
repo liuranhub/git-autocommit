@@ -34,21 +34,23 @@ public class GitProject implements Project {
 
     public synchronized void push(Message message){
         long startTime = System.currentTimeMillis();
-        add();
-        if (!needCommit()) {
-            return;
-        }
-        commit(message.getMessage());
-        _pull();
-        // TODO merge后需要重新提交
-//        add();
-//        if (!needCommit()) {
-//            return;
-//        }
-//        commit(message.getMessage());
 
-        _push();
-        LOG.info("push take up time : " + (System.currentTimeMillis() - startTime));
+        add();
+        boolean needPush;
+        if (needPush = needCommit()) {
+            commitLocal(message.getMessage());
+        }
+        pullFromOrigin();
+        // TODO merge后需要重新提交
+        add();
+        if (needCommit()) {
+            commitLocal(message.getMessage());
+        }
+
+        if (needPush) {
+            pushToOrigin();
+        }
+        LOG.info("total time : " + (System.currentTimeMillis() - startTime));
     }
 
     public synchronized void pull(Message message){
@@ -58,9 +60,7 @@ public class GitProject implements Project {
     private boolean needCommit(){
         try {
             Status status = git.status().call();
-            if (!CollectionUtils.isEmpty(status.getChanged())
-                    || !CollectionUtils.isEmpty(status.getAdded())
-                    || !CollectionUtils.isEmpty(status.getRemoved())){
+            if (status.hasUncommittedChanges()){
                 return true;
             }
         } catch (GitAPIException e) {
@@ -69,7 +69,7 @@ public class GitProject implements Project {
         return false;
     }
 
-    private void _push(){
+    private void pushToOrigin(){
         try {
             git.push().setCredentialsProvider(credentialsProvider).call();
             LOG.info("push");
@@ -78,16 +78,16 @@ public class GitProject implements Project {
         }
     }
 
-    private void _pull(){
+    private void pullFromOrigin(){
         try {
-            git.pull().setStrategy(MergeStrategy.OURS).call();
+            git.pull().call();
             LOG.info("pull");
         } catch (GitAPIException e) {
             e.printStackTrace();
         }
     }
 
-    private void commit(String message) {
+    private void commitLocal(String message) {
         try {
             git.commit().setMessage(message).call();
             LOG.info("commit");
