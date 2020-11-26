@@ -14,6 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 public class GitProject implements Project {
@@ -44,7 +46,7 @@ public class GitProject implements Project {
         // TODO merge后需要重新提交
         add();
         if (needCommit()) {
-            commitLocal(message.getMessage());
+            commitLocal("pull and merge , time : " + Calendar.getInstance().getTime());
         }
 
         if (needPush) {
