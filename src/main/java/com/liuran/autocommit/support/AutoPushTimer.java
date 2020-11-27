@@ -45,8 +45,15 @@ public class AutoPushTimer {
     }
 
     private static void randomDelayTime(){
+        final int maxSleepTime = 30 * 60 * 1000;
+        final int minSleepTime = 5 * 50 * 1000;
         try {
-            Thread.sleep(new Random().nextInt(30 * 60 * 1000));
+            int sleepTime;
+            while ((sleepTime = new Random().nextInt(maxSleepTime)) < minSleepTime) {
+
+            }
+
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
